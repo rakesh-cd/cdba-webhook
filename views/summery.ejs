@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>FW tracker</title>
+    <link rel="shortcut icon" href="https://data.whicdn.com/images/352541842/original.jpg">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+</head>
+
+<script>
+        $( function  () {
+      var myString = localStorage.getItem('key');
+      if(myString!='ping')
+      window.location ='https://fw-tracker.herokuapp.com'
+    });
+    function sendAjax() {
+        let user = document.getElementById("mySelect").value
+        let summery = document.getElementById("review").value
+        $.ajax({
+            async: true,
+            crossDomain: true,
+            url: '/addSummery',
+            type: "POST",
+            data: JSON.stringify({
+                summery: summery,
+                userName: user
+            }),
+            contentType: "application/json",
+            processData: false,
+            success: function (data) {
+                alert("updated");
+                const btn = document.getElementById(toolName);
+                btn.disabled = true;
+                btn.style.backgroundColor = 'Red';
+                btn.innerHTML = 'halt 30min';
+                setTimeout(() => {
+                    btn.style.backgroundColor = '#efefef';
+                    btn.disabled = false;
+                    btn.innerHTML = 'Click Me';
+                    console.log('Button Activated')
+                }, 1800000)
+            },
+            error: function (err) {
+                console.log(err);
+            }
+        })
+
+    }
+    function myFunction() {
+        let element = document.getElementById('ScTable');
+        let btn = document.getElementById('btn');
+        if (element.style.display != 'inline') {
+            element.style.display = 'inline';
+            btn.innerHTML = 'hide The Headlines';
+        }
+        else {
+            element.style.display = 'none';
+            btn.innerHTML = 'Get The Headlines';
+
+        }
+    }
+</script>
+
+<body>
+
+    <div class="container">
+        <div style="display: flex;justify-content: space-between;">
+            <h2>Tor farms</h2>
+        </div>
+        <div style="margin:2vh;width:80vw">
+            <img style="width:80vw" src="https://www.surreyyfc.co.uk/wp-content/uploads/2019/01/farm-footer.png">
+        </div>
+        <a class="btn btn-primary btn-lg" href="/push" role="button">Go to the Report</a>
+        <h4 style="color:green">Author:Rakesh Das</h4>
+        <span style="color:red">Select User:</span>
+        <select id="mySelect" style="margin:3vh">
+            <% for (var i=0; i < result.users.length; i++) { %>
+                <option value=<%=result.users[i].userName %>><%=result.users[i].userName %>
+                </option>
+                <% } %>
+
+        </select>
+        <h4>Enter The updated Result</h4>
+        <textarea id="review" name="wreview" rows="14" cols="75">
+    1st=203,
+    2nd=34,
+    3rd=45,
+    corn-1=11,
+    corn-2=11,
+    corn-3=11,
+    corn-4=11,
+    corn-5=11,
+    corn-6=11,
+    corn-7=11,
+    corn-8=11,
+
+
+        </textarea>
+        <hr>
+        <button type="button" class="btn btn-primary" onclick="sendAjax()">Submit</button>
+
+    </div>
+
+</body>
+
+</html>

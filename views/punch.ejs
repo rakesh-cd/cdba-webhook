@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>FW tracker</title>
+    <link rel="shortcut icon" href="https://data.whicdn.com/images/352541842/original.jpg">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+</head>
+
+<script>
+    $( function  () {
+      var myString = localStorage.getItem('key');
+      if(myString!='ping')
+      window.location ='https://fw-tracker.herokuapp.com'
+    });
+    function sendAjax(toolName) {
+        let user = document.getElementById("mySelect").value
+        $.ajax({
+            async: true,
+            crossDomain: true,
+            url: '/pushPunch',
+            type: "POST",
+            data: JSON.stringify(
+                {
+                punchType: toolName,
+                userName: user
+            }),
+            contentType: "application/json",
+            processData: false,
+            success: function (data) {
+                alert("updated");                
+            },
+            error: function (err) {
+                console.log(err);
+            }
+        })
+
+    }
+    function myFunction() {
+        let element = document.getElementById('ScTable');
+        let btn = document.getElementById('btn');
+        if (element.style.display != 'inline') {
+            element.style.display = 'inline';
+            btn.innerHTML = 'hide The Headlines';
+        }
+        else {
+            element.style.display = 'none';
+            btn.innerHTML = 'Get The Headlines';
+        }
+    }
+</script>
+
+<body>
+
+    <div class="container">
+        <div style="display: flex;justify-content: space-between;">
+            <h2>Tor farms</h2>
+        </div>
+        <div style="margin:2vh;width:80vw">
+            <img style="width:80vw" src="https://www.surreyyfc.co.uk/wp-content/uploads/2019/01/farm-footer.png">
+        </div>
+        <a class="btn btn-primary btn-lg" href="/push" role="button">Go to the Report</a>
+        <h4 style="color:green">Author:Rakesh Das</h4>
+        <span style="color:red">Select User:</span>
+        <select id="mySelect" style="margin:3vh">
+            <% for (var i=0; i < result.users.length; i++) { %>
+                <option value=<%=result.users[i].userName %>><%=result.users[i].userName %>
+                </option>
+                <% } %>
+
+        </select>
+        <button onclick="sendAjax('Punch In')">Punch In</button>
+        <button onclick="sendAjax('Punch Out')">Punch Out</button>
+       <hr>
+       <table id='ScTable' class="table">
+        <thead>
+            <tr>
+                <th>Type</th>
+                <th>Name</th>
+                <th>TimeStamp</th>
+            </tr>
+        </thead>
+        <tbody>
+
+            <% for (var i=result.punches.length-1; i >=0; i--) { %>
+                <tr>
+                    <% if(result.punches[i].punchType=="Punch Out"){ %>
+                        <td style="color:rgb(255, 0, 0)"><strong><%=result.punches[i].punchType %></strong></strong> </td>
+                      <% } else{ %>  
+                        <td style="color:rgb(0, 216, 18)"><strong><%=result.punches[i].punchType %> </strong></td>
+                     <% } %>
+                    
+                    <td id=<%=i%>>
+                        <%=result.punches[i].userName %>
+                    </td>
+                    <td><%=new Date(new Date(result.punches[i].timestamp).getTime() + 330 * 60000) %></td>
+                </tr>
+                <% } %>
+
+        </tbody>
+    </table>
+       <!-- punches -->
+    </div>
+
+</body>
+
+</html>

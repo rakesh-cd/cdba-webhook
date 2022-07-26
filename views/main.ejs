@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <title>FW tracker</title>
+  <link rel="shortcut icon" href="https://data.whicdn.com/images/352541842/original.jpg">
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+</head>
+<script>
+  
+  function sendAjax() {
+    let doc=document.getElementById("searchTxt").value;
+    if(doc=='ping'){
+      localStorage.setItem('key','ping');
+      window.location ='http://localhost:3000/listall';
+    }
+    else 
+    alert('invalid password')
+  }
+  </script>
+
+<body style="margin: 3vh;">
+    <div class="jumbotron" style="padding:2vh">
+        <h1 class="display-4">Hello, CDBA - Users</h1>
+        <p class="lead">Here you can check all the hook push</p>
+        <hr class="my-4">
+               
+        pass : <input name="searchTxt" type="text" maxlength="512" id="searchTxt" style="margin-bottom:15px"/>
+
+        <p class="lead">
+          
+          <a class="btn btn-primary btn-lg" onclick="sendAjax()" role="button">Go to the Tracking</a>
+        </p>
+      </div>
+</body>
+
+</html>
+

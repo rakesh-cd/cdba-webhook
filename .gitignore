@@ -1,0 +1,9 @@
+node_modules
+uploads/*
+!uploads/.gitkeep
+.DS_Store
+dist-dev
+dist-stage
+dist-prod
+build
+package-lock.json

@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>FW tracker</title>
+    <link rel="shortcut icon" href="https://data.whicdn.com/images/352541842/original.jpg">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+</head>
+
+<script>
+        $( function  () {
+      var myString = localStorage.getItem('key');
+      if(myString!='ping')
+      window.location ='https://fw-tracker.herokuapp.com'
+    });
+    function sendAjax(toolName) {
+        let user = document.getElementById("mySelect").value
+        $.ajax({
+            async: true,
+            crossDomain: true,
+            url: '/addtoolsTracking',
+            type: "POST",
+            data: JSON.stringify({
+                toolName: toolName,
+                userName: user
+            }),
+            contentType: "application/json",
+            processData: false,
+            success: function (data) {
+                alert("updated");
+                const btn = document.getElementById(toolName);
+                btn.disabled = true;
+                btn.style.backgroundColor = 'Red';
+                btn.innerHTML = 'halt 30min';
+                setTimeout(() => {
+                    btn.style.backgroundColor = '#efefef';
+                    btn.disabled = false;
+                    btn.innerHTML = 'Click Me';
+                    console.log('Button Activated')
+                }, 1800000)
+            },
+            error: function (err) {
+                console.log(err);
+            }
+        })
+
+    }
+    function myFunction() {
+        let element = document.getElementById('ScTable');
+        let btn = document.getElementById('btn');
+        if (element.style.display != 'inline') {
+            element.style.display = 'inline';
+            btn.innerHTML = 'hide The Headlines';
+        }
+        else {
+            element.style.display = 'none';
+            btn.innerHTML = 'Get The Headlines';
+
+        }
+    }
+</script>
+
+<body>
+
+    <div class="container">
+        <div style="display: flex;justify-content: space-between;">
+            <h2>Tor farms</h2>
+        </div>
+        <div style="margin:2vh;width:80vw">
+            <img style="width:80vw" src="https://www.surreyyfc.co.uk/wp-content/uploads/2019/01/farm-footer.png">
+        </div>
+        <a class="btn btn-primary btn-lg" href="/list" role="button">Go to the Report</a>
+        <a class="btn btn-primary btn-lg" href="/punch" role="button">Go to the punch</a>
+        <a class="btn btn-primary btn-lg" href="/summery" role="button">Go to wrap Up</a>
+        <h4 style="color:green">Author:Rakesh Das</h4>
+        <span style="color:red">Select User:</span>
+        <select id="mySelect" style="margin:3vh">
+            <% for (var i=0; i < result.users.length; i++) { %>
+                <option value=<%=result.users[i].userName %>><%=result.users[i].userName %>
+                </option>
+                <% } %>
+
+        </select>
+        <table id='ScTable' class="table">
+            <thead>
+                <tr>
+                    <th>Tool Name</th>
+                    <th>click</th>
+                </tr>
+            </thead>
+            <tbody>
+
+                <% for (var i=0; i < result.tools.length; i++) { %>
+                    <tr>
+                        <td id=<%=i%>>
+                            <%=result.tools[i].toolName %>
+                        </td>
+                        <td><button id=<%=result.tools[i].toolName %> onclick="sendAjax('<%=result.tools[i].toolName%>')">Click me</button></td>
+                    </tr>
+                    <% } %>
+
+            </tbody>
+        </table>
+    </div>
+
+</body>
+
+</html>

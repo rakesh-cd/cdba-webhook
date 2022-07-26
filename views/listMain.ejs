@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <title>FW tracker</title>
+  <link rel="shortcut icon" href="https://data.whicdn.com/images/352541842/original.jpg">
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+</head>
+
+<script>
+      $( function  () {
+      var myString = localStorage.getItem('key');
+      if(myString!='ping')
+      window.location ='https://fw-tracker.herokuapp.com'
+    });
+  function startTime() {
+  const today = new Date();
+  let h = today.getHours();
+  let m = today.getMinutes();
+  let s = today.getSeconds();
+  m = checkTime(m);
+  s = checkTime(s);
+  document.getElementById('txt').innerHTML =  h + ":" + m + ":" + s;
+  setTimeout(startTime, 1000);
+}
+
+function checkTime(i) {
+  if (i < 10) {i = "0" + i};  // add zero in front of numbers < 10
+  return i;
+}
+
+  function myFunction(){
+    let element = document.getElementById('ScTable');
+    let btn = document.getElementById('btn');
+    if (element.style.display != 'inline'){
+    	element.style.display = 'inline';
+    	btn.innerHTML = 'hide The Headlines';
+    }
+  else{
+    element.style.display = 'none';
+    btn.innerHTML = 'Get The Headlines';
+
+  }
+  }
+</script>
+<body >
+
+  <div class="container">
+    <div style="display: flex;justify-content: space-between;">
+    <h2>Tor farms</h2>
+    </div>
+    <div style="margin:2vh;width:80vw">
+      <img style="width:80vw" src="https://www.surreyyfc.co.uk/wp-content/uploads/2019/01/farm-footer.png">
+  </div>
+      <h4 style="color:green">Author:Rakesh Das</h4>
+      <table id ='ScTable' class="table" >
+      <thead>
+        <tr>
+          <th>id</th>
+          <th>payload</th>
+          <th>Time Stamp</th>
+          
+        </tr>
+      </thead>
+      <tbody>
+        
+        <% let prevtime = {};
+        for (var i=result.length-1; i >= 0; i--) { %>
+          <tr>
+            <td id=<%=i%>>
+              <%=result[i].toolName %>
+            </td>
+            <td><%=result[i].userName %></td>
+            <td><%=new Date(new Date(result[i].timestamp).getTime() + 330 * 60000) %></td>
+          </tr>
+          <% 
+        prevtime[result[i].toolName]=new Date(result[i].timestamp);
+        } %>
+
+      </tbody>
+    </table>
+  </div>
+
+</body>
+
+</html>
