@@ -60,7 +60,7 @@ function checkTime(i) {
       <table id ='ScTable' class="table" >
       <thead>
         <tr>
-          <th>id</th>
+          <th>user-id</th>
           <th>payload</th>
           <th>Time Stamp</th>
           
@@ -72,9 +72,9 @@ function checkTime(i) {
         for (var i=result.length-1; i >= 0; i--) { %>
           <tr>
             <td id=<%=i%>>
-              <%=result[i].toolName %>
+              <%=result[i].id %>
             </td>
-            <td><%=result[i].userName %></td>
+            <td><%=JSON.stringify(result[i].payload) %></td>
             <td><%=new Date(new Date(result[i].timestamp).getTime() + 330 * 60000) %></td>
           </tr>
           <% 
