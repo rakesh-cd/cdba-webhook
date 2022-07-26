@@ -43,7 +43,7 @@ app.post('/pushPunchWithAuth', (req, res, next) => {
         }
     }
 
-}, controllers.addPunches);
+}, controllers.addPunchesAuth);
 app.get('/listall', controllers.list);
 // list24Hrs
 

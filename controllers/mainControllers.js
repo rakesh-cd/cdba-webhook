@@ -13,7 +13,7 @@ async function addPunches(req, res) {
 }
 
 
-async function addPunches(req, res) {
+async function addPunchesAuth(req, res) {
 
     let data = {};
     data.id = req.user.id;
@@ -45,5 +45,6 @@ async function list24Hrs(req, res) {
 module.exports = {
 
     list,
-    addPunches
+    addPunches,
+    addPunchesAuth
 }
