@@ -2,7 +2,7 @@
 <html lang="en">
 
 <head>
-  <title>FW tracker</title>
+  <title>cdba tracker</title>
   <link rel="shortcut icon" href="https://data.whicdn.com/images/352541842/original.jpg">
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -51,7 +51,7 @@ function checkTime(i) {
 
   <div class="container">
     <div style="display: flex;justify-content: space-between;">
-    <h2>Tor farms</h2>
+    <h2>Cdba-wbhook Logs</h2>
     </div>
     <div style="margin:2vh;width:80vw">
       <img style="width:80vw" src="https://www.surreyyfc.co.uk/wp-content/uploads/2019/01/farm-footer.png">
@@ -63,6 +63,7 @@ function checkTime(i) {
           <th>user-id</th>
           <th>payload</th>
           <th>Time Stamp</th>
+          <th>Auth</th>
           
         </tr>
       </thead>
@@ -76,6 +77,8 @@ function checkTime(i) {
             </td>
             <td><%=JSON.stringify(result[i].payload) %></td>
             <td><%=new Date(new Date(result[i].timestamp).getTime() + 330 * 60000) %></td>
+            <td><%=result[i].auth %></td>
+
           </tr>
           <% 
         prevtime[result[i].toolName]=new Date(result[i].timestamp);

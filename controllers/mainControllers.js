@@ -12,10 +12,21 @@ async function addPunches(req, res) {
     return res.status(200).send({ message: "Punches created successfully", data: punch });
 }
 
+
+async function addPunches(req, res) {
+
+    let data = {};
+    data.id = req.user.id;
+    data.auth=true;
+    data.payload = req.body.payload;
+    let punch = await webhook.create(data);
+    return res.status(200).send({ message: "Punches created successfully", data: punch });
+}
+
 async function pushWebHooks(req, res) {
 
     let data = {};
-    data.id = req.params.id;
+    data.id = req.user.id;
     data.payload = req.body.payload;
     let punch = await webhook.create(data);
     return res.status(200).send({ message: "Punches created successfully", data: punch });
